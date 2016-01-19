@@ -5,28 +5,35 @@ var leapYear = function(year) {
 $(document).ready(function() {
   $("form#leap-year").submit(function(event) {
     var year = parseInt($("input#year").val());
-    var result = leapYear(year);
+    if(!isNaN(year)) {
+      var result = leapYear(year);
 
-    $(".year").text(year);
-    $("#next").hide();
+      $(".year").text(year);
+      $("#next").hide();
+      $("#prev").hide();
+      $(".error").hide();
 
-    if (!result) {                 // same as writing if (result === false)
-      $(".not").text("not");
-      for(var nextLeapYear = year; nextLeapYear <= year+4; nextLeapYear++) {
-        if(leapYear(nextLeapYear))
-          $(".nextLeapYear").text(nextLeapYear);
-        $("#next").show();
+      if (!result) {                 // same as writing if (result === false)
+        $(".not").text("not");
+        for(var nextLeapYear = year; nextLeapYear <= year+4; nextLeapYear++) {
+          if(leapYear(nextLeapYear))
+            $(".nextLeapYear").text(nextLeapYear);
+          $("#next").show();
+        }
+        for(var prevLeapYear = year; prevLeapYear >= year-4; prevLeapYear--) {
+          if(leapYear(prevLeapYear))
+            $(".prevLeapYear").text(prevLeapYear);
+          $("#prev").show();
+        }
+      } else {
+        $(".not").text("");
       }
-      for(var prevLeapYear = year; prevLeapYear >= year-4; prevLeapYear--) {
-        if(leapYear(prevLeapYear))
-          $(".prevLeapYear").text(prevLeapYear);
-        $("#prev").show();
-      }
+
+      $("#result").show();
     } else {
-      $(".not").text("");
+      $("#result").hide();
+      $(".error").show();
     }
-
-    $("#result").show();
     event.preventDefault();
   });
 });
