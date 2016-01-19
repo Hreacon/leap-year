@@ -1,6 +1,20 @@
 var leapYear = function(year) {
   return (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0)) && (year >0);
-};
+}
+var nextLeapYear = function(year) {
+  for(var nextLeapYear = year; nextLeapYear <= year+4; nextLeapYear++) {
+    if(leapYear(nextLeapYear)) {
+      return nextLeapYear;
+    }
+  }
+}
+var prevLeapYear = function(year) {
+  for(var prevLeapYear = year; prevLeapYear >= year-4; prevLeapYear--) {
+    if(leapYear(prevLeapYear)) {
+      return prevLeapYear;
+    }
+  }
+}
 
 $(document).ready(function() {
   $("form#leap-year").submit(function(event) {
@@ -15,25 +29,20 @@ $(document).ready(function() {
 
       if (!result) {                 // same as writing if (result === false)
         $(".not").text("not");
-        for(var nextLeapYear = year; nextLeapYear <= year+4; nextLeapYear++) {
-          if(leapYear(nextLeapYear))
-            $(".nextLeapYear").text(nextLeapYear);
-          $("#next").show();
-        }
-        for(var prevLeapYear = year; prevLeapYear >= year-4; prevLeapYear--) {
-          if(leapYear(prevLeapYear))
-            $(".prevLeapYear").text(prevLeapYear);
-          $("#prev").show();
-        }
+        $(".nextLeapYear").text(nextLeapYear(year));
+        $("#next").show();
+        $(".prevLeapYear").text(prevLeapYear(year));
+        $("#prev").show();
       } else {
         $(".not").text("");
       }
-
       $("#result").show();
+
     } else {
       $("#result").hide();
       $(".error").show();
     }
+
     event.preventDefault();
   });
 });
