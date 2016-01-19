@@ -14,4 +14,10 @@ describe('leapYear', function() {
   it("is true for years divisible by 400", function() {
     expect(leapYear(2000)).to.equal(true);
   });
+  it("is false for years = NaN", function() {
+    expect(leapYear(NaN)).to.equal(false);
+  });
+  it("is false for years < 0", function() {
+    expect(leapYear(-4)).to.equal(false);
+  });
 });
